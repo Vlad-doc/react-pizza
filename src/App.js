@@ -3,11 +3,21 @@ import Header from './components/header';
 import PizzaBlock from './components/pizzaBlock';
 import Sort from './components/sort'
 import './scss/app.scss'
-import { pizzas } from './assets/data/database'
+import { useEffect, useState } from 'react';
 
 
 function App() {
-  console.log(pizzas);
+  const [pizzas, setPizzas] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  useEffect(() => {
+    setIsLoading(true)
+    fetch('https://63a3630f471b38b2060dfc76.mockapi.io/pizzas')
+      .then(data => data.json())
+      .then(res => {
+        setPizzas(res)
+        setIsLoading(false)
+      })
+  }, [])
   return (
     <div className="wrapper">
       <Header />
@@ -19,7 +29,7 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            {pizzas.map(pizza =>
+            {isLoading ? <div>Loading...</div> : pizzas.map(pizza =>
               <PizzaBlock {...pizza} key={pizza.id} />
             )}
           </div>
