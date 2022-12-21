@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const sort = () => {
+const Sort = () => {
+  const sortingBy = ['популярности', 'цене', 'алфавиту']
+  const [open, setOpen] = useState(false)
+  const [selectSortType, setSelectSortType] = useState(0)
   return (
     <div className="sort">
       <div className="sort__label">
@@ -17,17 +20,21 @@ const sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <span onClick={() => setOpen(prev => !prev)}>{sortingBy[selectSortType]}</span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {open &&
+        <div className="sort__popup">
+          <ul>
+            {sortingBy.map((sort, index) =>
+              <li key={sort} className={selectSortType === index ? 'active' : ''} onClick={() => {
+                setSelectSortType(index)
+                setOpen(false)
+              }}>{sort}</li>
+            )}
+          </ul>
+        </div>}
     </div>
   )
 }
 
-export default sort
+export default Sort
