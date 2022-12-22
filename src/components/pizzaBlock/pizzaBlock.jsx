@@ -18,7 +18,7 @@ const PizzaBlock = ({ title, price, types, sizes, imageUrl }) => {
           {types.map((type) => (
             <li
               key={type}
-              className={type === chooseType ? 'active' : ''}
+              className={type === chooseType || types.length < 2 ? 'active' : ''}
               onClick={() => setChooseType(type)}
             >
               {dough[type]}
