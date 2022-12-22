@@ -1,9 +1,10 @@
 import Categories from './components/categories';
 import Header from './components/header';
-import PizzaBlock from './components/pizzaBlock';
+import PizzaBlock from './components/pizzaBlock/pizzaBlock';
 import Sort from './components/sort'
 import './scss/app.scss'
 import { useEffect, useState } from 'react';
+import Skeleton from './components/pizzaBlock/contentLoader';
 
 
 function App() {
@@ -29,9 +30,14 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            {isLoading ? <div>Loading...</div> : pizzas.map(pizza =>
-              <PizzaBlock {...pizza} key={pizza.id} />
-            )}
+            {
+              isLoading ?
+                [...new Array(10)].map((_, index) =>
+                  <Skeleton key={index} />)
+                :
+                pizzas.map(pizza =>
+                  <PizzaBlock {...pizza} key={pizza.id} />
+                )}
           </div>
         </div>
       </div>
