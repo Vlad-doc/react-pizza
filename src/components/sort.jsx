@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 
-const Sort = () => {
-  const sortingBy = ['популярности', 'цене', 'алфавиту']
+const Sort = ({ sorting, changeSort }) => {
   const [open, setOpen] = useState(false)
-  const [selectSortType, setSelectSortType] = useState(0)
   return (
     <div className="sort">
       <div className="sort__label">
@@ -20,14 +18,14 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(prev => !prev)}>{sortingBy[selectSortType]}</span>
+        <span onClick={() => setOpen(prev => !prev)}>{sorting.type[sorting.init]}</span>
       </div>
       {open &&
         <div className="sort__popup">
           <ul>
-            {sortingBy.map((sort, index) =>
-              <li key={sort} className={selectSortType === index ? 'active' : ''} onClick={() => {
-                setSelectSortType(index)
+            {sorting.sortingBy.map((sort) =>
+              <li key={sort} className={sorting.init === '' ? 'active' : ''} onClick={() => {
+                changeSort(sort)
                 setOpen(false)
               }}>{sort}</li>
             )}
