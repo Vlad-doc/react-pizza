@@ -18,6 +18,36 @@
     }
   }
 
+  &__input {
+    position: relative;
+    .input {
+      width: 300px;
+      padding: 5px 30px;
+      font-size: 16px;
+      border-radius: 10px;
+      border-color: rgb(242, 237, 237, 0.92);
+      font-size: 16px;
+      &:hover,
+      &:focus {
+        border-color: black;
+      }
+    }
+    img {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      &.img-search {
+        top: 8px;
+        left: 8px;
+      }
+      &.img-reject {
+        top: 8px;
+        right: 8px;
+        cursor: pointer;
+      }
+    }
+  }
+
   &__logo {
     display: flex;
 

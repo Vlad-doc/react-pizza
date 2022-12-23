@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logoSvg from '../assets/img/pizza-logo.svg'
+import searchLogo from "../assets/img/free-icon-search-3991270.png"
+import reject from "../assets/img/reject.png"
 
 const Header = () => {
   return (
@@ -15,8 +17,10 @@ const Header = () => {
             </div>
           </div>
         </Link>
-        <div>
-          <input type="text" />
+        <div className='header__input'>
+          <img src={searchLogo} alt="" className='img img-search' />
+          <input type="text" className='input' />
+          <img src={reject} alt="" className='img img-reject' />
         </div>
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
