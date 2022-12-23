@@ -15,6 +15,9 @@ const Header = () => {
             </div>
           </div>
         </Link>
+        <div>
+          <input type="text" />
+        </div>
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>
@@ -51,7 +54,6 @@ const Header = () => {
             <span>3</span>
           </Link>
         </div>
-
       </div>
     </div>
   )

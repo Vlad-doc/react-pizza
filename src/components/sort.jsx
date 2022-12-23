@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 const Sort = ({ sorting, changeSort }) => {
   const [open, setOpen] = useState(false)
+  const init = sorting.init === 'популярности' ? 'популярности' : sorting.type[sorting.init]
   return (
     <div className="sort">
       <div className="sort__label">
@@ -18,7 +19,7 @@ const Sort = ({ sorting, changeSort }) => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(prev => !prev)}>{sorting.type[sorting.init]}</span>
+        <span onClick={() => setOpen(prev => !prev)}>{init}</span>
       </div>
       {open &&
         <div className="sort__popup">

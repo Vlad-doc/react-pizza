@@ -5,6 +5,7 @@ import PizzaBlock from '../components/pizzaBlock/pizzaBlock';
 import Sort from '../components/sort'
 import Skeleton from '../components/pizzaBlock/contentLoader';
 import { setCategoryId, setSortType } from '../store/slices/filterSlice';
+import axios from 'axios';
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([])
@@ -16,10 +17,9 @@ const Home = () => {
   const changeSortType = type => dispatch(setSortType(type))
   useEffect(() => {
     setIsLoading(true)
-    fetch(`https://63a3630f471b38b2060dfc76.mockapi.io/pizzas?category=${filtrating.categoryId === 0 ? '' : filtrating.categoryId}&sortBy=${sorting.init}`)
-      .then(data => data.json())
+    axios.get(`https://63a3630f471b38b2060dfc76.mockapi.io/pizzas?category=${filtrating.categoryId === 0 ? '' : filtrating.categoryId}&sortBy=${sorting.init}`)
       .then(res => {
-        setPizzas(res)
+        setPizzas(res.data)
         setIsLoading(false)
       })
     window.scrollTo(0, 0)
