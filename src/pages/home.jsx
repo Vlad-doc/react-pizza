@@ -15,6 +15,7 @@ const Home = () => {
   const dispatch = useDispatch()
   const onClickChange = id => dispatch(setCategoryId(id))
   const changeSortType = type => dispatch(setSortType(type))
+  const searchValue = useSelector(state => state.search.value)
   useEffect(() => {
     setIsLoading(true)
     axios.get(`https://63a3630f471b38b2060dfc76.mockapi.io/pizzas?category=${filtrating.categoryId === 0 ? '' : filtrating.categoryId}&sortBy=${sorting.init}`)
@@ -37,9 +38,11 @@ const Home = () => {
             [...new Array(10)].map((_, index) =>
               <Skeleton key={index} />)
             :
-            pizzas.map(pizza =>
-              <PizzaBlock {...pizza} key={pizza.id} />
-            )}
+            pizzas
+              .filter(pizza => pizza.title.toLowerCase().includes(searchValue.toLowerCase()))
+              .map(pizza =>
+                <PizzaBlock {...pizza} key={pizza.id} />
+              )}
       </div>
     </>
   )
