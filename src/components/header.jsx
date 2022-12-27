@@ -1,14 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logoSvg from '../assets/img/pizza-logo.svg'
-import searchLogo from "../assets/img/free-icon-search-3991270.png"
-import reject from "../assets/img/reject.png"
-import { useDispatch, useSelector } from 'react-redux'
-import { searchPizzaByTitle } from '../store/slices/searchSlice'
+import SearchInput from './searchInput'
 
 const Header = () => {
-  const searchValue = useSelector(state => state.search.value)
-  const dispatch = useDispatch()
   return (
     <div className="header">
       <div className="container">
@@ -21,12 +16,7 @@ const Header = () => {
             </div>
           </div>
         </Link>
-        <div className='header__input'>
-          <img src={searchLogo} alt="" className='img img-search' />
-          <input type="text" className='input' value={searchValue} onChange={event => dispatch(searchPizzaByTitle(event.target.value))} />
-          {searchValue &&
-            <img src={reject} alt="" className='img img-reject' onClick={() => dispatch(searchPizzaByTitle(''))} />}
-        </div>
+        <SearchInput />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>520 ₽</span>

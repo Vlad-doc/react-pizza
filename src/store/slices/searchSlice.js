@@ -9,7 +9,6 @@ const searchSlice = createSlice({
   reducers: {
     searchPizzaByTitle: (state, { payload }) => {
       state.value = payload
-      console.log(state.value)
     }
   }
 })
