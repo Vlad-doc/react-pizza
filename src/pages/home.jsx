@@ -7,23 +7,26 @@ import Skeleton from '../components/pizzaBlock/contentLoader';
 import { setCategoryId, setSortType } from '../store/slices/filterSlice';
 import axios from 'axios';
 import Pagination from '../components/pagination/pagination';
+import { setCurrentPage } from '../store/slices/paginationSlice';
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
+  const currentPage = useSelector(state => state.pagination.currentPage)
   const filtrating = useSelector(state => state.filter.filter)
   const sorting = useSelector(state => state.filter.sort)
   const dispatch = useDispatch()
   const onClickChange = id => dispatch(setCategoryId(id))
   const changeSortType = type => dispatch(setSortType(type))
   const searchValue = useSelector(state => state.search.value)
+  const setPage = number => dispatch(setCurrentPage(number))
   useEffect(() => {
     setIsLoading(true)
     axios.get(`https://63a3630f471b38b2060dfc76.mockapi.io/pizzas?category=${filtrating.categoryId === 0 ? '' : filtrating.categoryId}&sortBy=${sorting.init}&page=${currentPage}&limit=4`)
       .then(res => {
         setPizzas(res.data)
         setIsLoading(false)
+        console.log(res.data)
       })
     window.scrollTo(0, 0)
   }, [filtrating.categoryId, sorting.init, currentPage])
@@ -46,7 +49,7 @@ const Home = () => {
                 <PizzaBlock {...pizza} key={pizza.id} />
               )}
       </div>
-      <Pagination onChangePage={setCurrentPage} />
+      <Pagination currentPage={currentPage} onChangePage={setPage} />
     </>
   )
 }
