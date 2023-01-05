@@ -2,21 +2,21 @@ import React, { useCallback, useRef, useState } from 'react'
 import searchLogo from "../assets/img/free-icon-search-3991270.png"
 import reject from "../assets/img/reject.png"
 import { useDispatch } from 'react-redux'
-import { searchPizzaByTitle } from '../store/slices/searchSlice'
+import { searchPizzaByTitle } from '../store/slices/filterSlice'
 import { debounce } from 'lodash'
 
 const SearchInput = () => {
   const [value, setValue] = useState('')
-  // const searchValue = useSelector(state => state.search.value)
   const dispatch = useDispatch()
   const inputRef = useRef()
-  const updateSearchInput = debounce((str) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const updateSearchInput = useCallback(debounce((str) => {
     dispatch(searchPizzaByTitle(str))
-  }, 500)
-  const onChangeInput = useCallback(event => {
+  }, 1000), [])
+  const onChangeInput = event => {
     setValue(event.target.value)
     updateSearchInput(event.target.value)
-  }, [updateSearchInput])
+  }
   return (
     <div className='header__input'>
       <img src={searchLogo} alt="" className='img img-search' />

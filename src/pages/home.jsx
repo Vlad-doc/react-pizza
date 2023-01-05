@@ -1,40 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import Categories from '../components/categories';
 import PizzaBlock from '../components/pizzaBlock/pizzaBlock';
 import Sort from '../components/sort'
 import Skeleton from '../components/pizzaBlock/contentLoader';
-import { setCategoryId, setSortType } from '../store/slices/filterSlice';
-import axios from 'axios';
 import Pagination from '../components/pagination/pagination';
-import { setCurrentPage } from '../store/slices/paginationSlice';
+import { setCategoryId, setCurrentPage } from '../store/slices/filterSlice';
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const currentPage = useSelector(state => state.pagination.currentPage)
-  const filtrating = useSelector(state => state.filter.filter)
-  const sorting = useSelector(state => state.filter.sort)
   const dispatch = useDispatch()
+  const currentPage = useSelector(state => state.filter.currentPage)
+  const categoryId = useSelector(state => state.filter.categoryId)
+  const sortType = useSelector(state => state.filter.sort.sortProperty)
+  const searchValue = useSelector(state => state.filter.search.value)
+
+
+  const category = categoryId > 0 ? `category=${categoryId}` : ''
+  const search = searchValue ? `search=${searchValue}` : ''
+
   const onClickChange = id => dispatch(setCategoryId(id))
-  const changeSortType = type => dispatch(setSortType(type))
-  const searchValue = useSelector(state => state.search.value)
   const setPage = number => dispatch(setCurrentPage(number))
+
   useEffect(() => {
     setIsLoading(true)
-    axios.get(`https://63a3630f471b38b2060dfc76.mockapi.io/pizzas?category=${filtrating.categoryId === 0 ? '' : filtrating.categoryId}&sortBy=${sorting.init}&page=${currentPage}&limit=4`)
+    axios.get(`https://63a3630f471b38b2060dfc76.mockapi.io/pizzas?${category}&sortBy=${sortType}&page=${currentPage}&limit=4&${search}`)
       .then(res => {
         setPizzas(res.data)
         setIsLoading(false)
-        console.log(res.data)
       })
     window.scrollTo(0, 0)
-  }, [filtrating.categoryId, sorting.init, currentPage])
+  }, [category, sortType, currentPage, search])
   return (
     <>
       <div className="content__top">
-        <Categories filtrating={filtrating} changeCategory={onClickChange} />
-        <Sort sorting={sorting} changeSort={changeSortType} />
+        <Categories categoryId={categoryId} changeCategory={onClickChange} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
