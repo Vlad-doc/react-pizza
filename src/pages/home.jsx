@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import qs from 'qs'
+import { useNavigate } from 'react-router-dom';
 import Categories from '../components/categories';
 import PizzaBlock from '../components/pizzaBlock/pizzaBlock';
 import Sort from '../components/sort'
 import Skeleton from '../components/pizzaBlock/contentLoader';
 import Pagination from '../components/pagination/pagination';
-import { setCategoryId, setCurrentPage } from '../store/slices/filterSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../store/slices/filterSlice';
+import { list } from '../components/sort'
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const currentPage = useSelector(state => state.filter.currentPage)
   const categoryId = useSelector(state => state.filter.categoryId)
@@ -20,17 +25,44 @@ const Home = () => {
 
   const category = categoryId > 0 ? `category=${categoryId}` : ''
   const search = searchValue ? `search=${searchValue}` : ''
+  const isSearch = useRef(false)
+  const isMounted = useRef(false)
 
   const onClickChange = id => dispatch(setCategoryId(id))
   const setPage = number => dispatch(setCurrentPage(number))
 
   useEffect(() => {
-    setIsLoading(true)
-    axios.get(`https://63a3630f471b38b2060dfc76.mockapi.io/pizzas?${category}&sortBy=${sortType}&page=${currentPage}&limit=4&${search}`)
-      .then(res => {
-        setPizzas(res.data)
-        setIsLoading(false)
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        category,
+        sortType,
+        currentPage,
       })
+      navigate(`?${queryString}`)
+    }
+    isMounted.current = true
+  }, [category, sortType, currentPage, navigate])
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1))
+      const sort = list.find(item => item.sortProperty === params.sortProperty)
+      dispatch(setFilters({
+        ...params,
+        sort
+      }))
+      isSearch.current = true
+    }
+  }, [dispatch])
+  useEffect(() => {
+    if (!isSearch.current) {
+      setIsLoading(true)
+      axios.get(`https://63a3630f471b38b2060dfc76.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortType}${search}`)
+        .then(res => {
+          setPizzas(res.data)
+          setIsLoading(false)
+        })
+    }
+    isSearch.current = false
     window.scrollTo(0, 0)
   }, [category, sortType, currentPage, search])
   return (
