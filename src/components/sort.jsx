@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSort } from '../store/slices/filterSlice'
 
@@ -12,8 +12,18 @@ const Sort = () => {
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
   const sort = useSelector(state => state.filter.sort)
+  const sortRef = useRef()
+  useEffect(() => {
+    const clickOutside = event => {
+      if (!event.path.includes(sortRef.current)) {
+        setOpen(false)
+      }
+    }
+    document.body.addEventListener('click', clickOutside)
+    return () => document.body.removeEventListener('click', clickOutside)
+  }, [])
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"

@@ -22,7 +22,6 @@ const Home = () => {
   const sortType = useSelector(state => state.filter.sort.sortProperty)
   const searchValue = useSelector(state => state.filter.search.value)
 
-
   const category = categoryId > 0 ? `category=${categoryId}` : ''
   const search = searchValue ? `search=${searchValue}` : ''
   const isSearch = useRef(false)
