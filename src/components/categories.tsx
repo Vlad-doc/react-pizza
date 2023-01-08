@@ -2,7 +2,7 @@ import React from "react"
 
 interface ICategoriesProps {
   categoryId: number
-  changeCategory: any
+  changeCategory: (index: number) => void
 }
 
 const Categories: React.FC<ICategoriesProps> = ({

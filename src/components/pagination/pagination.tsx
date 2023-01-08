@@ -4,7 +4,7 @@ import s from "./pagination.module.scss"
 
 interface IPagination {
   currentPage: number
-  onChangePage: any
+  onChangePage: (page: number) => void
 }
 
 const Pagination: React.FC<IPagination> = ({ onChangePage, currentPage }) => {

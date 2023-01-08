@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux"
 import { searchPizzaByTitle } from "../store/slices/filterSlice"
 import { debounce } from "lodash"
 
-const SearchInput = () => {
+const SearchInput: React.FC = () => {
   const [value, setValue] = useState("")
   const dispatch = useDispatch()
   const inputRef = useRef<HTMLInputElement>(null)
@@ -16,7 +16,7 @@ const SearchInput = () => {
     }, 1000),
     [],
   )
-  const onChangeInput = (event: any) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
     updateSearchInput(event.target.value)
   }
