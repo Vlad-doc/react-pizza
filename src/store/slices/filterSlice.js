@@ -36,6 +36,5 @@ const filterSlice = createSlice({
   }
 })
 
-
 export default filterSlice.reducer
 export const { setCategoryId, setSort, searchPizzaByTitle, setCurrentPage, setFilters } = filterSlice.actions

@@ -1,24 +1,27 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addItem } from '../../store/slices/cartSlice'
+import { Link } from 'react-router-dom'
+import { addItem, selectCartItemById } from '../../store/slices/cartSlice'
 
 const PizzaBlock = ({ id, title, price, types, sizes, imageUrl }) => {
   const dough = ['тонкое', 'традиционное']
   const [selectSize, setSelectSize] = useState(0)
   const [chooseType, setChooseType] = useState(0)
   const dispatch = useDispatch()
-  const cardItem = useSelector(state => state.cart.items.find(pizza => pizza.id === id))
+  const cardItem = useSelector(selectCartItemById(id))
   const addPizzasToCart = () => {
     dispatch(addItem({ id, title, price, imageUrl, types: dough[chooseType], sizes: sizes[selectSize] }))
   }
   return (
     <div className='pizza-block-wrapper'>
       <div className="pizza-block">
-        <img
-          className="pizza-block__image"
-          src={imageUrl}
-          alt="Pizza"
-        />
+        <Link to={`/pizza/${id}`} >
+          <img
+            className="pizza-block__image"
+            src={imageUrl}
+            alt="Pizza"
+          />
+        </Link>
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
