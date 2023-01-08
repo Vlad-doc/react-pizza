@@ -36,5 +36,12 @@ const filterSlice = createSlice({
   }
 })
 
+export const sortSelector = (state) => state.filter.sort
+export const currentPageSelector = state => state.filter.currentPage
+export const categoryIdSelector = state => state.filter.categoryId
+export const sortTypeSelector = state => state.filter.sort.sortProperty
+export const searchValueSelector = state => state.filter.search.value
+
+
 export default filterSlice.reducer
 export const { setCategoryId, setSort, searchPizzaByTitle, setCurrentPage, setFilters } = filterSlice.actions
