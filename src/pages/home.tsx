@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
+import { useAppDispatch } from "../store/store"
 import Categories from "../components/categories"
 import PizzaBlock from "../components/pizzaBlock/pizzaBlock"
 import Sort from "../components/sort"
@@ -16,7 +17,7 @@ import {
 import { fetchPizzas, pizzasSelector } from "../store/slices/pizzasSlice"
 
 const Home: React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const currentPage = useSelector(currentPageSelector)
   const categoryId = useSelector(categoryIdSelector)
   const sortType = useSelector(sortTypeSelector)
@@ -30,10 +31,7 @@ const Home: React.FC = () => {
   const setPage = (number: number) => dispatch(setCurrentPage(number))
 
   useEffect(() => {
-    dispatch(
-      // @ts-ignore
-      fetchPizzas({ category, sortType, currentPage, search }),
-    )
+    dispatch(fetchPizzas({ category, sortType, currentPage, search }))
     window.scrollTo(0, 0)
   }, [category, sortType, currentPage, search, dispatch])
   return (

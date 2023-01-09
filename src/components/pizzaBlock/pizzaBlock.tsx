@@ -34,6 +34,7 @@ const PizzaBlock: React.FC<IPizzaBlockProps> = ({
         imageUrl,
         types: dough[chooseType],
         sizes: sizes[selectSize],
+        count: 0,
       }),
     )
   }

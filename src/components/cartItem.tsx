@@ -1,6 +1,11 @@
 import React from "react"
-import { useDispatch } from "react-redux"
-import { addItem, clearItem, removeItem } from "../store/slices/cartSlice"
+import {
+  addItem,
+  CartItemStore,
+  clearItem,
+  removeItem,
+} from "../store/slices/cartSlice"
+import { useAppDispatch } from "../store/store"
 
 interface ICartItemProps {
   id: string
@@ -21,12 +26,12 @@ const CartItem: React.FC<ICartItemProps> = ({
   imageUrl,
   count,
 }) => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const pizzaIncrement = () => {
-    dispatch(addItem({ id }))
+    dispatch(addItem({ id } as CartItemStore))
   }
   const pizzaDecrement = () => {
-    dispatch(removeItem({ id }))
+    dispatch(removeItem({ id } as CartItemStore))
   }
   const removePizza = () => {
     dispatch(clearItem(id))

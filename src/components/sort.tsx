@@ -4,7 +4,7 @@ import { setSort, sortSelector } from "../store/slices/filterSlice"
 
 interface IList {
   name: string
-  sortProperty: string
+  sortProperty: "rating" | "price" | "title"
 }
 
 export const list: IList[] = [
