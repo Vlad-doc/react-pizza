@@ -1,11 +1,8 @@
 import React from "react"
-import {
-  addItem,
-  CartItemStore,
-  clearItem,
-  removeItem,
-} from "../store/slices/cartSlice"
+import clsx from "clsx"
+import { addItem, clearItem, removeItem } from "../store/cart/slice"
 import { useAppDispatch } from "../store/store"
+import { CartItemStore } from "../store/cart/types"
 
 interface ICartItemProps {
   id: string
@@ -48,8 +45,12 @@ const CartItem: React.FC<ICartItemProps> = ({
         </p>
       </div>
       <div className="cart__item-count">
-        <div
-          className="button button--outline button--circle cart__item-count-minus"
+        <button
+          disabled={count === 1}
+          className={clsx(
+            "button button--outline button--circle cart__item-count-minus",
+            { "cart__item-count-minus--disabled": count === 1 },
+          )}
           onClick={pizzaDecrement}>
           <svg
             width="10"
@@ -66,9 +67,9 @@ const CartItem: React.FC<ICartItemProps> = ({
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{count}</b>
-        <div
+        <button
           className="button button--outline button--circle cart__item-count-plus"
           onClick={pizzaIncrement}>
           <svg
@@ -86,7 +87,7 @@ const CartItem: React.FC<ICartItemProps> = ({
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>{price * count} ₽</b>

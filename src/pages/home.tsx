@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useCallback, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { useAppDispatch } from "../store/store"
 import Categories from "../components/categories"
@@ -10,11 +10,11 @@ import {
   categoryIdSelector,
   currentPageSelector,
   searchValueSelector,
-  setCategoryId,
-  setCurrentPage,
   sortTypeSelector,
-} from "../store/slices/filterSlice"
-import { fetchPizzas, pizzasSelector } from "../store/slices/pizzasSlice"
+} from "../store/filter/selector"
+import { setCategoryId, setCurrentPage } from "../store/filter/slice"
+import { fetchPizzas } from "../store/pizzas/slice"
+import { pizzasSelector } from "../store/pizzas/selector"
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -27,7 +27,10 @@ const Home: React.FC = () => {
   const category = categoryId > 0 ? `category=${categoryId}` : ""
   const search = searchValue ? `search=${searchValue}` : ""
 
-  const onClickChange = (id: number) => dispatch(setCategoryId(id))
+  const onClickChange = useCallback(
+    (id: number) => dispatch(setCategoryId(id)),
+    [dispatch],
+  )
   const setPage = (number: number) => dispatch(setCurrentPage(number))
 
   useEffect(() => {

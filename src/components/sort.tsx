@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { setSort, sortSelector } from "../store/slices/filterSlice"
+import { setSort } from "../store/filter/slice"
+import { sortSelector } from "../store/filter/selector"
 
 interface IList {
   name: string

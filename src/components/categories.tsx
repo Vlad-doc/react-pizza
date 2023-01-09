@@ -1,4 +1,5 @@
 import React from "react"
+import { useWhyDidYouUpdate } from "ahooks"
 
 interface ICategoriesProps {
   categoryId: number
@@ -17,6 +18,7 @@ const Categories: React.FC<ICategoriesProps> = ({
     "Острые",
     "Закрытые",
   ]
+  useWhyDidYouUpdate("Categories", { categoryId, changeCategory })
   return (
     <div className="categories">
       <ul>
@@ -33,4 +35,4 @@ const Categories: React.FC<ICategoriesProps> = ({
   )
 }
 
-export default Categories
+export default React.memo(Categories)

@@ -3,11 +3,16 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import CartEmpty from "../components/cartEmpty"
 import CartItem from "../components/cartItem"
-import { clearItems, selectCart } from "../store/slices/cartSlice"
+import { clearItems } from "../store/cart/slice"
+import { selectCart } from "../store/cart/selector"
 
 const Cart: React.FC = () => {
-  const { items, totalPrice, totalCount } = useSelector(selectCart)
+  const { items, totalPrice } = useSelector(selectCart)
   const dispatch = useDispatch()
+  const totalCount = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0,
+  )
   const removePizzas = () => {
     dispatch(clearItems())
   }

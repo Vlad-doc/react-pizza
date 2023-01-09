@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from "react"
 import searchLogo from "../assets/img/free-icon-search-3991270.png"
 import reject from "../assets/img/reject.png"
 import { useDispatch } from "react-redux"
-import { searchPizzaByTitle } from "../store/slices/filterSlice"
+import { searchPizzaByTitle } from "../store/filter/slice"
 import { debounce } from "lodash"
 
 const SearchInput: React.FC = () => {

@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
-import { addItem, selectCartItemById } from "../../store/slices/cartSlice"
+import { addItem } from "../../store/cart/slice"
+import { selectCartItemById } from "../../store/cart/selector"
 
 interface IPizzaBlockProps {
   id: string
